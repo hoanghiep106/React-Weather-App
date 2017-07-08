@@ -25496,11 +25496,14 @@
 	        null,
 	        React.createElement(Nav, null),
 	        React.createElement(
-	            'h2',
-	            null,
-	            'Main component'
-	        ),
-	        props.children
+	            'div',
+	            { className: 'row' },
+	            React.createElement(
+	                'div',
+	                { className: 'columns medium-6 large-4 small-centered' },
+	                props.children
+	            )
+	        )
 	    );
 	};
 
@@ -27305,11 +27308,45 @@
 
 	var React = __webpack_require__(8);
 
+	var _require = __webpack_require__(166),
+	    Link = _require.Link;
+
 	var Examples = function Examples(props) {
 	    return React.createElement(
-	        'h3',
+	        'div',
 	        null,
-	        'Examples page'
+	        React.createElement(
+	            'h1',
+	            { className: 'text-center' },
+	            'Examples page'
+	        ),
+	        React.createElement(
+	            'p',
+	            null,
+	            'Here are a few wxample locations to try out'
+	        ),
+	        React.createElement(
+	            'ol',
+	            null,
+	            React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                    Link,
+	                    { to: '/?location=Philadenphia' },
+	                    'Philadenphia, PA'
+	                )
+	            ),
+	            React.createElement(
+	                'li',
+	                null,
+	                React.createElement(
+	                    Link,
+	                    { to: '/?location=Hochiminh' },
+	                    'Hochiminh City'
+	                )
+	            )
+	        )
 	    );
 	};
 
