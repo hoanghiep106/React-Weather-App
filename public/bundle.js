@@ -25528,7 +25528,9 @@
 
 	    onSearch: function onSearch(e) {
 	        e.preventDefault();
-	        alert('Not yet a function.');
+	        if (this.refs.city.value.length > 0) {
+	            window.location.hash = '/?location=' + encodeURIComponent(this.refs.city.value);
+	        }
 	    },
 	    render: function render() {
 	        return React.createElement(
@@ -25586,7 +25588,7 @@
 	                        React.createElement(
 	                            'li',
 	                            null,
-	                            React.createElement('input', { type: 'search', placeholder: 'Search weather by city' })
+	                            React.createElement('input', { type: 'search', placeholder: 'Search weather by city', ref: 'city' })
 	                        ),
 	                        React.createElement(
 	                            'li',
@@ -25623,19 +25625,33 @@
 	            isLoading: false
 	        };
 	    },
+	    componentDidMount: function componentDidMount() {
+	        var location = this.props.location.query.location;
+	        if (location && location.length > 0) {
+	            this.handleSearch(location);
+	            window.location.hash = '';
+	        }
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	        var location = newProps.location.query.location;
+	        if (location && location.length > 0) {
+	            this.handleSearch(location);
+	            window.location.hash = '';
+	        }
+	    },
 	    handleSearch: function handleSearch(location) {
 	        var that = this;
 	        that.setState({
 	            isLoading: true,
-	            errorMessage: undefined
+	            errorMessage: undefined,
+	            location: undefined,
+	            temp: undefined
 	        });
 	        OpenWeatherMap.getTemp(location).then(function (response) {
 	            if (response.cod && response.message) {
 	                that.setState({
 	                    isLoading: false,
-	                    errorMessage: response.message,
-	                    location: null,
-	                    temp: null
+	                    errorMessage: response.message
 	                });
 	            } else {
 	                that.setState({
@@ -26282,8 +26298,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!../../node_modules/css-loader/index.js!./app.css", function() {
-				var newContent = require("!!../../node_modules/css-loader/index.js!./app.css");
+			module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./app.scss", function() {
+				var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/sass-loader/index.js!./app.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -26301,7 +26317,7 @@
 
 
 	// module
-	exports.push([module.id, ".page-title {\n    margin-top: 2.5rem;\n    margin-bottom: 2.5rem;\n}\n\ninput[type=search] {\n    box-shadow: none;\n}", ""]);
+	exports.push([module.id, ".page-title {\n  color: #555;\n  margin-top: 2.5rem;\n  margin-bottom: 2.5rem; }\n\ninput[type=search] {\n  box-shadow: none; }\n", ""]);
 
 	// exports
 
