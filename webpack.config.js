@@ -27,5 +27,6 @@ module.exports = {
             test: /\.jsx?$/,
             exclude: /(node_modules|bower_compnents)/
         }]
-    }
+    },
+    devtools: 'cheap-module-eval-source-map' 
 }
